@@ -1,0 +1,15 @@
+<component name="libraryTable">
+  <library name="AXmlResourceParser">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/ext-lib/AXmlResourceParser.jar!/" />
+      <root url="jar://$PROJECT_DIR$/ext-lib/dd-plist-1.16.jar!/" />
+      <root url="jar://$PROJECT_DIR$/ext-lib/java-client-4.0.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/ext-lib/selenium-server-2.53.1.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/ext-lib/java-client-4.0.0-sources.jar!/" />
+      <root url="jar://$PROJECT_DIR$/ext-lib/selenium-server-2.53.1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
