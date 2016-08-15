@@ -20,10 +20,16 @@ public interface PageActions {
     //iOS右滑返回
     void swipeForBack();
 
-    //点击
-    void shortTap();
+    //id定位点击
+    void shortTapById(String byId);
 
-    //长按
-    void longTap();
+    //id定位长按
+    void longTapById(String byId);
+
+    //xpath定位点击
+    void shortTapByXpath(String xpath);
+
+    //xpath定位长按
+    void longTapByXpath(String xpath);
 
 }
