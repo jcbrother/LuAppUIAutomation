@@ -30,6 +30,7 @@ public class PropertiesFetcher {
         dbConfigFileStream = getClass().getClassLoader().getResourceAsStream("db_config.properties");
     }
 
+    //获取运行配置信息
     public void fetchIntoRunConfigs() throws IOException {
         Properties props = loadPropertiesFromStream(runConfigFileStream);
         Set<String> propNames = props.stringPropertyNames();
@@ -41,6 +42,7 @@ public class PropertiesFetcher {
         }
     }
 
+    //获取设备信息
     public void fetchIntoDeviceConfigs() throws IOException {
         Properties props = loadPropertiesFromStream(deviceConfigFileStream);
         Set<String> propNames = props.stringPropertyNames();
@@ -53,6 +55,7 @@ public class PropertiesFetcher {
         }
     }
 
+    //获取数据库配置信息
     public void fetchIntoDBConfig() throws IOException {
         Properties props = loadPropertiesFromStream(dbConfigFileStream);
         Set<String> propNames = props.stringPropertyNames();

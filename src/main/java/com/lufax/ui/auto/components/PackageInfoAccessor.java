@@ -1,8 +1,6 @@
 package com.lufax.ui.auto.components;
 
 import com.lufax.ui.auto.interfaces.LuCapabilityType;
-import netscape.javascript.JSObject;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -21,8 +19,8 @@ public class PackageInfoAccessor {
 
     @Autowired
     public PropertiesFetcher propertiesFetcher;
-    public String packageDir = System.getProperty("user.dir") + String.format("%spackages", File.separator);
 
+    public String packageDir = System.getProperty("user.dir") + String.format("%spackages", File.separator);
     public HashMap<String,String> packInfo = new HashMap<String,String>();
 
     public HashMap<String,String> getPackageInfo() throws IOException {

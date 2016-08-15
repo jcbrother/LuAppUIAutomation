@@ -11,14 +11,15 @@ import org.openqa.selenium.WebElement;
 
 public class MobilePage implements PageActions{
 
-    public String currentPageName = "";
-    public AppiumDriver driver = null;
-    public int pageWidth = 0;
-    public int pageHeight = 0;
-    public int pageSwipeDuration = 1000;
-    public int longTapDuration = 1000;
+    private String currentPageName = "";
+    private AppiumDriver driver = null;
+    private int pageWidth = 0;
+    private int pageHeight = 0;
+    private int pageSwipeDuration = 1000;
+    private int longTapDuration = 2000;
 
 
+    //设置页面对象属性
     public MobilePage setCurrentPageName(String currentPageName) {
         this.currentPageName = currentPageName;
         return this;
@@ -35,7 +36,32 @@ public class MobilePage implements PageActions{
         return this;
     }
 
+    //获取页面对象属性
+    public WebElement getElementById(String byId){
+        return driver.findElementById(byId);
+    }
 
+    public WebElement getElementByXpath(String xpath){
+        return driver.findElementByXPath(xpath);
+    }
+
+    public AppiumDriver getDriver(){
+        return driver;
+    }
+
+    public String getCurrentPageName(){
+        return currentPageName;
+    }
+
+    public int getPageWidth(){
+        return pageWidth;
+    }
+
+    public int getPageHeight(){
+        return pageHeight;
+    }
+
+    //重写页面对象方法
     @Override
     public void swipeUp() {
         driver.swipe(pageWidth/2, pageHeight*3/4, pageWidth/2, pageHeight/4, pageSwipeDuration);
@@ -48,17 +74,17 @@ public class MobilePage implements PageActions{
 
     @Override
     public void swipeLeft() {
-        driver.swipe(pageWidth*3/4, pageHeight/2, pageWidth/4, pageHeight/2, pageSwipeDuration);
+        driver.swipe(pageWidth*4/5, pageHeight/2, pageWidth/5, pageHeight/2, pageSwipeDuration);
     }
 
     @Override
     public void swipeRight() {
-        driver.swipe(pageWidth/4, pageHeight/2, pageWidth*3/4, pageHeight/2, pageSwipeDuration);
+        driver.swipe(pageWidth/5, pageHeight/2, pageWidth*4/5, pageHeight/2, pageSwipeDuration);
     }
 
     @Override
     public void swipeForBack() {
-        driver.swipe(0, pageHeight/2, pageWidth*3/4, pageHeight/2, pageSwipeDuration/2);
+        driver.swipe(0, pageHeight/2, pageWidth*4/5, pageHeight/2, pageSwipeDuration);
     }
 
     @Override

@@ -1,6 +1,6 @@
 package com.lufax.ui.auto.executor;
 
-import com.lufax.ui.auto.services.DriverGenerator;
+import com.lufax.ui.auto.services.DriverGeneratorService;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -13,8 +13,8 @@ import java.io.IOException;
 public class Main {
     public static void main(String[] args) throws IOException {
         ApplicationContext beanFactory = new ClassPathXmlApplicationContext("applicationContext.xml");
-        DriverGenerator driverGenerator = (DriverGenerator) beanFactory.getBean("driverGenerator");
-        driverGenerator.setLuCapabilities().getAppiumDriver();
+        DriverGeneratorService driverGeneratorService = (DriverGeneratorService) beanFactory.getBean("driverGeneratorService");
+        driverGeneratorService.setLuCapabilities().getAppiumDriver();
         System.out.println(System.getProperty("user.dir") + String.format("%spackages", File.separator));
     }
 }

@@ -21,7 +21,7 @@ import java.net.URL;
  */
 
 @Service
-public class DriverGenerator {
+public class DriverGeneratorService {
 
     @Autowired
     public DeviceInfoAccessor deviceInfoAccessor;
@@ -32,7 +32,7 @@ public class DriverGenerator {
     public JSONObject devInfo = null;
     public String appPath = null;
 
-    public DriverGenerator setLuCapabilities() throws IOException {
+    public DriverGeneratorService setLuCapabilities() throws IOException {
         devInfo = deviceInfoAccessor.getDeviceInfo();
         capabilities.setCapability(LuCapabilityType.PLATFORM_NAME, devInfo.getString(LuCapabilityType.PLATFORM_NAME));
         capabilities.setCapability(LuCapabilityType.PLATFORM_VERSION, devInfo.getString(LuCapabilityType.PLATFORM_VERSION));
