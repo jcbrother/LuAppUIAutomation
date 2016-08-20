@@ -11,7 +11,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * Created by Jc on 16/8/7.
  */
-public class AutomationExecutor {
+public class UIAExecutor {
 
     public static ApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
 

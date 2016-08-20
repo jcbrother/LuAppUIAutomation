@@ -37,5 +37,6 @@
     <orderEntry type="library" name="selenium-server-standalone-2.53.0" level="project" />
     <orderEntry type="library" name="commons-lang3-3.4" level="project" />
     <orderEntry type="library" name="json-20160212" level="project" />
+    <orderEntry type="library" name="org.testng:testng:6.9.12" level="project" />
   </component>
 </module>

@@ -1,0 +1,42 @@
+1. 在类中执行testng.xml测试套件
+    TestListenerAdapter tla = new TestListenerAdapter();
+    TestNG testng = new TestNG();
+    List<String> suites = Lists.newArrayList();
+    suites.add("c:/tests/testng1.xml");//path to xml..
+    suites.add("c:/tests/testng2.xml");
+    tng.setTestSuites(suites);
+    tng.run();
+
+
+2. 测试类之间方法进行依赖
+    Put the method in a group and use dependsOnGroups.
+
+    class c1 {
+      @Test(groups={"c1.verifyConfig"})
+      public void verifyConfig() {
+        //verify some test config parameters
+      }
+    }
+
+    class c2 {
+      @Test(dependsOnGroups={"c1.verifyConfig"})
+      public void dotest() {
+        //Actual test
+      }
+    }
+
+    It is recommended to verify configuration in a @Before* and throw if something goes wrong there so the tests won't run. This way the tests can focus on just testing.
+
+    class c2 {
+      @BeforeClass
+      public static void verifyConfig() {
+        //verify some test config parameters
+        //Usually just throw exceptions
+        //Assert statements will work
+      }
+
+      @Test
+      public void dotest() {
+        //Actual test
+      }
+    }
