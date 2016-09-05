@@ -2,6 +2,8 @@ package com.lufax.ui.auto.executor;
 
 import com.lufax.ui.auto.services.DriverGeneratorService;
 import io.appium.java_client.AppiumDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.remote.server.Session;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 

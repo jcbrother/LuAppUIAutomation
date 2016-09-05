@@ -38,7 +38,7 @@ public class ClassDebugger {
 
         DesiredCapabilities capabilities = new DesiredCapabilities();
         File appDir = new File(System.getProperty("user.dir"));
-        File app = new File(appDir, "packages/Android/lufax_lufax_3.3.7.apk");
+        File app = new File(appDir, "packages/Android/lufax3.4.1.apk");
         capabilities.setCapability("app", app.getAbsolutePath());
         capabilities.setCapability("platformName", "Android");                //手机os
         capabilities.setCapability("platformVersion", "4.3");        //真机的Android版本

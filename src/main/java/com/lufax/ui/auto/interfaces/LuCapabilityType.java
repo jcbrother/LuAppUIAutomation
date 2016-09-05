@@ -11,5 +11,6 @@ public interface LuCapabilityType {
     String UDID = "udid";
     String APP_PATH = "app";
     String PACKAGE_VERSION = "packageVersion"; //该属性不在setCapabilities()中使用
+    String NO_RESET = "noReset";
 
 }

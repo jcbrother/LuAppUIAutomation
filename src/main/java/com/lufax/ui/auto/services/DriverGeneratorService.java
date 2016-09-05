@@ -39,6 +39,7 @@ public class DriverGeneratorService {
         capabilities.setCapability(LuCapabilityType.DEVICE_NAME, devInfo.getString(LuCapabilityType.DEVICE_NAME));
         capabilities.setCapability(LuCapabilityType.UDID, devInfo.getString(LuCapabilityType.UDID));
         capabilities.setCapability(LuCapabilityType.APP_PATH,packageInfoAccessor.getPackageInfo().get(LuCapabilityType.APP_PATH));
+        capabilities.setCapability(LuCapabilityType.NO_RESET, true);
         return this;
     }
 
