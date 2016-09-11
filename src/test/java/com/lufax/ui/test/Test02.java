@@ -12,12 +12,12 @@ import java.util.List;
  */
 public class Test02 {
 
-    @Test(dependsOnGroups = {"Test01.testMethod01"})
+    @Test(groups = {"Test02.testMethod01"} ,testName = "test02.method01")
     public void testMethod01(){
         System.out.println("[Test02]# this is test method 01...");
     }
 
-    @Test(dependsOnMethods = "testMethod01")
+    @Test(groups = {"Test02.testMethod02"} ,testName = "test02.method02")
     public void testMethod02(){
         System.out.println("[Test02]# this is test method 02...");
     }

@@ -1,0 +1,45 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="Test Suite for End To End">
+    <test name="Test1">
+        <classes>
+            <class name="com.lufax.ui.test.Test01">
+                <methods>
+                    <include name = "testMethod01"></include>
+                    <exclude name = "testMethod02"></exclude>
+                </methods>
+            </class>
+            <class name="com.lufax.ui.test.Test02">
+                <methods>
+                    <include name="testMethod01"></include>
+                    <exclude name="testMethod02"></exclude>
+                </methods>
+            </class>
+        </classes>
+        <groups>
+            <dependencies>
+                <group name="Test01.testMethod01" depends-on="Test02.testMethod01"></group>
+            </dependencies>
+        </groups>
+    </test>
+    <test name="Test2">
+        <classes>
+            <class name="com.lufax.ui.test.Test01">
+                <methods>
+                    <include name = "testMethod02"></include>
+                    <exclude name = "testMethod01"></exclude>
+                </methods>
+            </class>
+            <class name="com.lufax.ui.test.Test02">
+                <methods>
+                    <include name="testMethod02"></include>
+                    <exclude name="testMethod01"></exclude>
+                </methods>
+            </class>
+        </classes>
+        <groups>
+            <dependencies>
+                <group name="Test02.testMethod02" depends-on="Test01.testMethod02"></group>
+            </dependencies>
+        </groups>
+    </test>
+</suite>

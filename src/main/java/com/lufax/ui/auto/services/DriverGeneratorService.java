@@ -2,6 +2,7 @@ package com.lufax.ui.auto.services;
 
 import com.lufax.ui.auto.components.DeviceInfoAccessor;
 import com.lufax.ui.auto.components.PackageInfoAccessor;
+import com.lufax.ui.auto.components.PropertiesCenter;
 import com.lufax.ui.auto.interfaces.LuCapabilityType;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
@@ -27,19 +28,28 @@ public class DriverGeneratorService {
     public DeviceInfoAccessor deviceInfoAccessor;
     @Autowired
     public PackageInfoAccessor packageInfoAccessor;
+    @Autowired
+    public PropertiesCenter propertiesCenter;
 
     public DesiredCapabilities capabilities = new DesiredCapabilities();
     public JSONObject devInfo = null;
     public String appPath = null;
+    public boolean isNoResetApp = false;
 
     public DriverGeneratorService setLuCapabilities() throws IOException {
         devInfo = deviceInfoAccessor.getDeviceInfo();
+        isNoResetApp = Boolean.parseBoolean(propertiesCenter.init().getRunConfigs().get("app.no.reset"));
         capabilities.setCapability(LuCapabilityType.PLATFORM_NAME, devInfo.getString(LuCapabilityType.PLATFORM_NAME));
         capabilities.setCapability(LuCapabilityType.PLATFORM_VERSION, devInfo.getString(LuCapabilityType.PLATFORM_VERSION));
         capabilities.setCapability(LuCapabilityType.DEVICE_NAME, devInfo.getString(LuCapabilityType.DEVICE_NAME));
         capabilities.setCapability(LuCapabilityType.UDID, devInfo.getString(LuCapabilityType.UDID));
-        capabilities.setCapability(LuCapabilityType.APP_PATH,packageInfoAccessor.getPackageInfo().get(LuCapabilityType.APP_PATH));
-        capabilities.setCapability(LuCapabilityType.NO_RESET, true);
+        capabilities.setCapability(LuCapabilityType.NO_RESET, isNoResetApp);
+        if(isNoResetApp == true){
+            capabilities.setCapability(LuCapabilityType.APP_PACKAGE,"com.lufax.android");
+            capabilities.setCapability(LuCapabilityType.APP_ACTIVITY,"com.lufax.android.activity.HomeActivity");
+        }else{
+            capabilities.setCapability(LuCapabilityType.APP_PATH,packageInfoAccessor.getPackageInfo().get(LuCapabilityType.APP_PATH));
+        }
         return this;
     }
 

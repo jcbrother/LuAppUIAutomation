@@ -40,6 +40,7 @@ public class PropertiesFetcher {
             String value = props.getProperty(key);
             runConfigs.put(key,value);
         }
+        runConfigFileStream.close();
     }
 
     //获取设备信息
@@ -53,6 +54,7 @@ public class PropertiesFetcher {
             JSONObject jsonValue = new JSONObject(stringValue);
             deviceConfigs.put(key,jsonValue);
         }
+        deviceConfigFileStream.close();
     }
 
     //获取数据库配置信息
@@ -66,6 +68,7 @@ public class PropertiesFetcher {
             JSONObject jsonValue = new JSONObject(stringValue);
             dbConfigs.put(key,jsonValue);
         }
+        dbConfigFileStream.close();
     }
 
     public void fetchAllConfigs() throws IOException {

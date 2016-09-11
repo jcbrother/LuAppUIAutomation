@@ -19,12 +19,11 @@ import java.util.HashMap;
 public class DeviceInfoAccessor {
 
     @Autowired
-    public PropertiesFetcher propertiesFetcher;
+    public PropertiesCenter propertiesCenter;
 
     public JSONObject getDeviceInfo() throws IOException {
-        propertiesFetcher.fetchAllConfigs();
-        HashMap<String, String> runConf = propertiesFetcher.runConfigs;
-        HashMap<String, JSONObject> devConf = propertiesFetcher.deviceConfigs;
+        HashMap<String, String> runConf = propertiesCenter.init().getRunConfigs();
+        HashMap<String, JSONObject> devConf = propertiesCenter.init().getDeviceConfigs();
         String devName = runConf.get("mobile.device");
         JSONObject devInfo = devConf.get(devName);
         return devInfo;

@@ -1,4 +1,4 @@
-package com.lufax.ui.auto.implementations;
+package com.lufax.ui.auto.pagesobj;
 
 import com.lufax.ui.auto.interfaces.PageActions;
 import io.appium.java_client.AppiumDriver;
@@ -9,7 +9,7 @@ import org.openqa.selenium.WebElement;
  * Created by Jc on 16/8/7.
  */
 
-public class MobilePage implements PageActions{
+public class BaseMobilePage implements PageActions{
 
     private String currentPageName = "";
     private AppiumDriver driver = null;
@@ -20,17 +20,17 @@ public class MobilePage implements PageActions{
 
 
     //设置页面对象属性
-    public MobilePage setCurrentPageName(String currentPageName) {
+    public BaseMobilePage setCurrentPageName(String currentPageName) {
         this.currentPageName = currentPageName;
         return this;
     }
 
-    public MobilePage setDriver(AppiumDriver driver) {
+    public BaseMobilePage setDriver(AppiumDriver driver) {
         this.driver = driver;
         return this;
     }
 
-    public MobilePage setPageSize(){
+    public BaseMobilePage setPageSize(){
         this.pageWidth = driver.manage().window().getSize().width;
         this.pageHeight = driver.manage().window().getSize().height;
         return this;

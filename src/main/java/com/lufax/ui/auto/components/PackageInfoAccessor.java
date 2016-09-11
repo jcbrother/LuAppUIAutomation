@@ -18,16 +18,15 @@ import java.util.HashMap;
 public class PackageInfoAccessor {
 
     @Autowired
-    public PropertiesFetcher propertiesFetcher;
+    public PropertiesCenter propertiesCenter;
 
     public String packageDir = System.getProperty("user.dir") + String.format("%spackages", File.separator);
     public HashMap<String,String> packInfo = new HashMap<String,String>();
 
     public HashMap<String,String> getPackageInfo() throws IOException {
-        propertiesFetcher.fetchAllConfigs();
-        String mobileOSType = propertiesFetcher.runConfigs.get("mobile.os.type");
-        String packageName = propertiesFetcher.runConfigs.get("package.name");
-        String packageVersion = propertiesFetcher.runConfigs.get("package.version");
+        String mobileOSType = propertiesCenter.init().getRunConfigs().get("mobile.os.type");
+        String packageName = propertiesCenter.init().getRunConfigs().get("package.name");
+        String packageVersion = propertiesCenter.init().getRunConfigs().get("package.version");
         String appUrl = "";
         if ("android".equalsIgnoreCase(mobileOSType)) {
             appUrl = packageDir + String.format("%s%s%s%s", File.separator, "Android", File.separator, packageName);

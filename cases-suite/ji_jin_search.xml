@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE suite SYSTEM "lu-uia-suite.dtd" >
+<suite name="JiJinSearch" description="基金搜索测试用例集">
+    <cases exec-before-test="true" exec-after-test="true">
+        <before-test-cases purpose="测试前准备" preserve-order="true">
+            <case id="" title="" priority="">
+                <step id="" src-page-name="" method="" dest-page-name="" snapshoot="true" step-desc="" >
+                    <method-param name="" type="element-id" value="" />
+                    <assert-key value="" location-type="xpath" compare-value="sqlMapId:*/jetjiang" />
+                </step>
+            </case>
+        </before-test-cases>
+
+        <test-cases purpose="测试基金搜索功能" preserve-order="true">
+            <case id="" title="" priority="">
+                <step id="" src-page-name="" method="" dest-page-name="" snapshoot="true" step-desc="" >
+                    <method-param name="" type="element-id" value="" />
+                    <assert-key value="" location-type="xpath"  compare-value=""/>
+                </step>
+            </case>
+        </test-cases>
+
+        <after-test-cases purpose="测试清理" preserve-order="true">
+            <case id="" title="" priority="">
+                <step id="" src-page-name="" method="" dest-page-name="" snapshoot="true" step-desc="" >
+                    <method-param name="" type="element-id" value="" />
+                    <assert-key value="" location-type="id" compare-value="" />
+                </step>
+            </case>
+        </after-test-cases>
+    </cases>
+</suite>

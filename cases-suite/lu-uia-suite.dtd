@@ -1,0 +1,120 @@
+<!--
+Here is a quick overview of the main parts of this DTD.
+1. It's for lu-uia test suite definition.
+2. Test engineers just have to design test suites according to this DTD, and run it directly by executing engine. 
+-->
+
+
+<!-- A suite is the top-level element of a lu-uia-test.xml -->
+<!ELEMENT suite (cases) >
+<!-- Attributes description: 
+@attr name             test suite name.
+@attr description      test suite description.
+-->
+<!ATTLIST suite 
+    name CDATA #REQUIRED
+    description CDATA #REQUIRED
+>
+
+
+<!ELEMENT cases (before-test-cases, test-cases, after-test-cases) >
+<!-- Attributes description: 
+@attr exec-before-test   execute BeforeTestCases suite or not, true for yes , false for not.
+@attr exec-after-test    execute AfterTestCases suite or not , true for yes , fasle for not.
+-->
+<!ATTLIST cases 
+    exec-before-test (true | false) "true"
+    exec-after-test (true | false) "true"
+>
+
+
+<!ELEMENT before-test-cases (case) >
+<!-- Attributes description: 
+@attr purpose           test purpose. 
+@attr preserve-order    keep pagesobj execution order.
+-->
+<!ATTLIST before-test-cases 
+    purpose CDATA #REQUIRED
+    preserve-order (true | false) "true"
+>
+
+
+<!ELEMENT test-cases (case) >
+<!-- Attributes description: 
+@attr purpose           test purpose. 
+@attr preserve-order    keep pagesobj execution order.
+-->
+<!ATTLIST test-cases 
+    purpose CDATA #REQUIRED
+    preserve-order (true | false) "true"
+>
+
+
+<!ELEMENT after-test-cases (case) >
+<!-- Attributes description: 
+@attr purpose           test purpose. 
+@attr preserve-order    keep pagesobj execution order.
+-->
+<!ATTLIST after-test-cases 
+    purpose CDATA #REQUIRED
+    preserve-order (true | false) "true"
+>
+
+
+<!ELEMENT case (step) >
+<!-- Attributes description: 
+@attr id          case execution order key.  
+@attr title       case title. 
+@attr priority    case priority.
+-->
+<!ATTLIST case
+    id CDATA #REQUIRED
+    title CDATA #REQUIRED
+    priority CDATA #REQUIRED
+>
+
+
+<!ELEMENT step ( method-param, assert-key) >
+<!-- Attributes description: 
+@attr id                step execution order key.  
+@attr src-page-name     current page name.
+@attr method            operation method like swipe ,tap ,slide-up etc.
+@attr dest-page-name    destination page after method executed.
+@attr snapshoot         snapshoot or not after executed method.
+@attr step-desc         step descriptions.
+-->
+<!ATTLIST step
+    id CDATA #REQUIRED
+    src-page-name CDATA #REQUIRED
+    method CDATA #REQUIRED
+    dest-page-name CDATA #REQUIRED
+    snapshoot  (true | false) "false"
+    step-desc CDATA #REQUIRED
+>
+
+
+<!ELEMENT assert-key ANY >
+<!-- Attributes description: 
+@attr value              element id or xpath etc.
+@attr location-type      locate element by id or xpath
+@attr compare-value      assert by something from data source or static source.
+-->
+<!ATTLIST assert-key
+    value CDATA #REQUIRED
+    location-type ( id | xpath )  "id"
+    compare-value CDATA #REQUIRED
+>
+
+
+<!ELEMENT method-param ANY >
+<!-- Attributes description: 
+@attr name     parameter name
+@attr type     parameter type
+@attr value    parameter value  
+-->
+<!ATTLIST method-param
+    name CDATA #REQUIRED
+    type (element-id | element-xpath) "id"
+    value CDATA #REQUIRED
+>
+
