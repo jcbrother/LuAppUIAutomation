@@ -11,25 +11,25 @@ import java.util.LinkedList;
 @Component
 public class BaseTestCases {
 
-    public boolean isExecBeforeTest;
-    public boolean isExecAfterTest;
+    public String purpose;
+    public boolean isPreserveOrder;
     public LinkedList<Case> caseList;
 
-    public boolean isExecBeforeTest() {
-        return isExecBeforeTest;
+    public String getPurpose() {
+        return purpose;
     }
 
-    public BaseTestCases setIsExecBeforeTest(boolean isExecBeforeTest) {
-        this.isExecBeforeTest = isExecBeforeTest;
+    public BaseTestCases setPurpose(String purpose) {
+        this.purpose = purpose;
         return this;
     }
 
-    public boolean isExecAfterTest() {
-        return isExecAfterTest;
+    public boolean isPreserveOrder() {
+        return isPreserveOrder;
     }
 
-    public BaseTestCases setIsExecAfterTest(boolean isExecAfterTest) {
-        this.isExecAfterTest = isExecAfterTest;
+    public BaseTestCases setIsPreserveOrder(boolean isPreserveOrder) {
+        this.isPreserveOrder = isPreserveOrder;
         return this;
     }
 
