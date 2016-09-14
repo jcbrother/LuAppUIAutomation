@@ -61,7 +61,7 @@ Here is a quick overview of the main parts of this DTD.
 >
 
 
-<!ELEMENT case (step) >
+<!ELEMENT case (step)* >
 <!-- Attributes description: 
 @attr id          case execution order key.  
 @attr title       case title. 
@@ -74,7 +74,7 @@ Here is a quick overview of the main parts of this DTD.
 >
 
 
-<!ELEMENT step ( method-param, assert-key) >
+<!ELEMENT step ( method-param | assert-key)* >
 <!-- Attributes description: 
 @attr id                step execution order key.  
 @attr src-page-name     current page name.
@@ -113,7 +113,7 @@ Here is a quick overview of the main parts of this DTD.
 @attr value    parameter value  
 -->
 <!ATTLIST method-param
-    name CDATA #REQUIRED
+    name (elemId | elemXpath) "elemId"
     type (element-id | element-xpath) "id"
     value CDATA #REQUIRED
 >

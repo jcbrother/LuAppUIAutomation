@@ -3,7 +3,7 @@ package com.lufax.ui.auto.caseobj;
 /**
  * Created by jiangcan on 16/9/12.
  */
-public class Cases {
+public class Cases extends BaseSuiteElementObject{
 
     public boolean isExecBeforeTest;
     public boolean isExecAfterTest;

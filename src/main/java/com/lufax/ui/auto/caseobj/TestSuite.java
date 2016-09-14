@@ -9,7 +9,7 @@ import java.util.LinkedList;
  */
 
 @Component
-public class TestSuite {
+public class TestSuite extends BaseSuiteElementObject{
 
     public String name;
     public String description;

@@ -1,5 +1,6 @@
 package com.lufax.ui.auto.services;
 
+import com.lufax.ui.auto.caseobj.BaseSuiteElementObject;
 import com.lufax.ui.auto.caseobj.TestSuite;
 import com.lufax.ui.auto.components.PropertiesCenter;
 import org.dom4j.Attribute;
@@ -52,6 +53,11 @@ public class CaseParserService {
             String text = attribute.getText();
             System.out.println(text);
         }
+        return null;
+    }
+
+    public BaseSuiteElementObject suiteElementWrap(){
+
         return null;
     }
 

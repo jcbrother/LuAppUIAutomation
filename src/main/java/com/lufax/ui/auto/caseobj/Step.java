@@ -10,7 +10,7 @@ import java.util.LinkedList;
  */
 
 @Component
-public class Step {
+public class Step extends BaseSuiteElementObject{
 
     public int id;
     public String srcPageName;

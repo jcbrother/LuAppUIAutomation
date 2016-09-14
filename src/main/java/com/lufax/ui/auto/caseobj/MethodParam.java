@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
  */
 
 @Component
-public class MethodParam {
+public class MethodParam extends BaseSuiteElementObject{
 
     public String name;
     public String type;

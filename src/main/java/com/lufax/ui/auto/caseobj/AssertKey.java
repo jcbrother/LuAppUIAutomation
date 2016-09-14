@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
  */
 
 @Component
-public class AssertKey {
+public class AssertKey extends BaseSuiteElementObject{
 
     public String value;
     public String locationType;

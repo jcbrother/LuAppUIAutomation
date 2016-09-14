@@ -9,7 +9,7 @@ import java.util.LinkedList;
  */
 
 @Component
-public class BaseTestCases {
+public class BaseTestCases extends BaseSuiteElementObject{
 
     public String purpose;
     public boolean isPreserveOrder;

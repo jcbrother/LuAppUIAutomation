@@ -9,7 +9,7 @@ import java.util.LinkedList;
  */
 
 @Component
-public class Case {
+public class Case extends BaseSuiteElementObject{
 
     public String id;
     public String title;
