@@ -11,16 +11,16 @@ import java.util.LinkedList;
 @Component
 public class Case extends BaseSuiteElementObject{
 
-    public String id;
+    public int id;
     public String title;
     public String priority;
     public LinkedList<Step> steps = new LinkedList<Step>();
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public Case setId(String id) {
+    public Case setId(int id) {
         this.id = id;
         return this;
     }
