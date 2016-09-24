@@ -9,14 +9,14 @@ import java.util.LinkedList;
  */
 
 @Component
-public class Case extends BaseSuiteElementObject{
+public class Case extends BaseSuiteElementObject implements Comparable{
 
-    public int id;
-    public String title;
-    public String priority;
-    public LinkedList<Step> steps = new LinkedList<Step>();
+    private Integer id;
+    private String title;
+    private String priority;
+    private LinkedList<Step> steps = new LinkedList<Step>();
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
@@ -64,5 +64,12 @@ public class Case extends BaseSuiteElementObject{
             stringBuffer.append(stepDesc);
         }
         return stringBuffer.toString();
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        Case aCase = (Case) o;
+        int caseId = aCase.getId();
+        return this.getId().compareTo(caseId);
     }
 }

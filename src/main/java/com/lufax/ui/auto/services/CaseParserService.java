@@ -2,12 +2,16 @@ package com.lufax.ui.auto.services;
 
 import com.lufax.ui.auto.caseobj.*;
 import com.lufax.ui.auto.components.PropertiesCenter;
+import org.apache.commons.lang3.StringUtils;
 import org.dom4j.Attribute;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.io.IOException;
@@ -18,7 +22,7 @@ import java.util.LinkedList;
  * Created by Jc on 16/9/10.
  */
 
-//@Service
+@Service
 public class CaseParserService {
 
     @Autowired
@@ -169,7 +173,7 @@ public class CaseParserService {
                 if ("name".equalsIgnoreCase(attrName)) {
                     ((TestSuite) elementObject).setName(attrValue);
                 } else if ("description".equalsIgnoreCase(attrName)) {
-                    ((TestSuite) elementObject).setName(attrValue);
+                    ((TestSuite) elementObject).setDescription(attrValue);
                 }
             } else if ("cases".equalsIgnoreCase(elemName)) {
                 if ("exec-before-test".equalsIgnoreCase(attrName)) {
@@ -179,9 +183,9 @@ public class CaseParserService {
                 }
             } else if ("before-test-cases".equalsIgnoreCase(elemName) || "test-cases".equalsIgnoreCase(elemName) || "after-test-cases".equalsIgnoreCase(elemName)) {
                 if ("purpose".equalsIgnoreCase(attrName)) {
-                    ((BeforeTestCases) elementObject).setPurpose(attrValue);
+                    ((BaseTestCases) elementObject).setPurpose(attrValue);
                 } else if ("preserve-order".equalsIgnoreCase(attrName)) {
-                    ((BeforeTestCases) elementObject).setIsPreserveOrder(Boolean.parseBoolean(attrValue));
+                    ((BaseTestCases) elementObject).setIsPreserveOrder(Boolean.parseBoolean(attrValue));
                 }
             } else if ("case".equalsIgnoreCase(elemName)) {
                 if ("id".equalsIgnoreCase(attrName)) {
@@ -225,13 +229,23 @@ public class CaseParserService {
         }
     }
 
-
-    public static void main(String[] args) {
-        System.out.println(System.getProperty("user.dir") + String.format("%scases-suite", File.separator));
+    //元素名->类名
+    public String transElemNameToClassName(String elemName){
+        StringBuffer userDefinedClassNameBuffer = new StringBuffer();
+        String[] splitedElemNames = elemName.split("-");
+        for(String namePart: splitedElemNames){
+            namePart = StringUtils.capitalize(namePart);
+            userDefinedClassNameBuffer.append(namePart);
+        }
+        return userDefinedClassNameBuffer.toString();
     }
 
-
-
-
+    public static void main(String[] args) throws IOException {
+        System.out.println(System.getProperty("user.dir") + String.format("%scases-suite", File.separator));
+        ApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
+        CaseParserService caseParserService = (CaseParserService) ctx.getBean("caseParserService");
+        TestSuite testSuite = caseParserService.suiteParse();
+        System.out.println(System.getProperty("user.dir") + String.format("%scases-suite", File.separator));
+    }
 
 }

@@ -11,9 +11,9 @@ import java.util.LinkedList;
 @Component
 public class BaseTestCases extends BaseSuiteElementObject{
 
-    public String purpose;
-    public boolean isPreserveOrder;
-    public LinkedList<Case> caseList;
+    private String purpose;
+    private boolean isPreserveOrder;
+    private LinkedList<Case> caseList;
 
     public String getPurpose() {
         return purpose;

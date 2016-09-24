@@ -9,6 +9,14 @@ import org.springframework.stereotype.Component;
 @Component
 public class TestCases extends BaseTestCases{
 
-    public String suiteName = "test-suite";
+    public String getSuiteName() {
+        return suiteName;
+    }
+
+    public void setSuiteName(String suiteName) {
+        this.suiteName = suiteName;
+    }
+
+    private String suiteName = "test-cases";
 
 }

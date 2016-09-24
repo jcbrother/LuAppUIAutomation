@@ -5,11 +5,11 @@ package com.lufax.ui.auto.caseobj;
  */
 public class Cases extends BaseSuiteElementObject{
 
-    public boolean isExecBeforeTest;
-    public boolean isExecAfterTest;
-    public BeforeTestCases beforeTestCases;
-    public TestCases testCases;
-    public AfterTestCases afterTestCases;
+    private boolean isExecBeforeTest;
+    private boolean isExecAfterTest;
+    private BeforeTestCases beforeTestCases;
+    private TestCases testCases;
+    private AfterTestCases afterTestCases;
 
     public boolean isExecBeforeTest() {
         return isExecBeforeTest;

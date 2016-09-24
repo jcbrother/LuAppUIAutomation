@@ -10,19 +10,19 @@ import java.util.LinkedList;
  */
 
 @Component
-public class Step extends BaseSuiteElementObject{
+public class Step extends BaseSuiteElementObject implements Comparable{
 
-    public int id;
-    public String srcPageName;
-    public String method;
-    public String destPageName;
-    public boolean snapshoot;
-    public String stepDesc;
+    private Integer id;
+    private String srcPageName;
+    private String method;
+    private String destPageName;
+    private boolean snapshoot;
+    private String stepDesc;
 
-    public LinkedList<MethodParam> methodParams;
-    public LinkedList<AssertKey> assertKeys;
+    private LinkedList<MethodParam> methodParams;
+    private LinkedList<AssertKey> assertKeys;
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
@@ -92,5 +92,12 @@ public class Step extends BaseSuiteElementObject{
     public Step setAssertKeys(LinkedList<AssertKey> assertKeys) {
         this.assertKeys = assertKeys;
         return this;
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        Case aCase = (Case) o;
+        int caseId = aCase.getId();
+        return this.getId().compareTo(caseId);
     }
 }

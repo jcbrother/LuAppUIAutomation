@@ -9,9 +9,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class AssertKey extends BaseSuiteElementObject{
 
-    public String value;
-    public String locationType;
-    public String compareValue;
+    private String value;
+    private String locationType;
+    private String compareValue;
 
     public String getValue() {
         return value;

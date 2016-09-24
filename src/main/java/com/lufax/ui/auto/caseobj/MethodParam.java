@@ -9,9 +9,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class MethodParam extends BaseSuiteElementObject{
 
-    public String name;
-    public String type;
-    public String value;
+    private String name;
+    private String type;
+    private String value;
 
     public String getName() {
         return name;

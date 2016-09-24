@@ -11,9 +11,9 @@ import java.util.LinkedList;
 @Component
 public class TestSuite extends BaseSuiteElementObject{
 
-    public String name;
-    public String description;
-    public LinkedList<Cases> casesList = null;
+    private String name;
+    private String description;
+    private LinkedList<Cases> casesList = null;
 
     public String getName() {
         return name;

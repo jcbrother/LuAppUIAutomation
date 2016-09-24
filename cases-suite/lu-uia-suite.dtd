@@ -31,7 +31,7 @@ Here is a quick overview of the main parts of this DTD.
 <!ELEMENT before-test-cases (case) >
 <!-- Attributes description: 
 @attr purpose           test purpose. 
-@attr preserve-order    keep pagesobj execution order.
+@attr preserve-order    keep xml file defined execution order. if false, execute case order by id.
 -->
 <!ATTLIST before-test-cases 
     purpose CDATA #REQUIRED
@@ -42,7 +42,7 @@ Here is a quick overview of the main parts of this DTD.
 <!ELEMENT test-cases (case) >
 <!-- Attributes description: 
 @attr purpose           test purpose. 
-@attr preserve-order    keep pagesobj execution order.
+@attr preserve-order    keep xml file defined case execution order. if false, execute case order by id.
 -->
 <!ATTLIST test-cases 
     purpose CDATA #REQUIRED
@@ -53,7 +53,7 @@ Here is a quick overview of the main parts of this DTD.
 <!ELEMENT after-test-cases (case) >
 <!-- Attributes description: 
 @attr purpose           test purpose. 
-@attr preserve-order    keep pagesobj execution order.
+@attr preserve-order    keep xml file defined execution order. if false, execute case order by id.
 -->
 <!ATTLIST after-test-cases 
     purpose CDATA #REQUIRED
@@ -76,7 +76,7 @@ Here is a quick overview of the main parts of this DTD.
 
 <!ELEMENT step ( method-param | assert-key)* >
 <!-- Attributes description: 
-@attr id                step execution order key.  
+@attr id                step execution order key.
 @attr src-page-name     current page name.
 @attr method            operation method like swipe ,tap ,slide-up etc.
 @attr dest-page-name    destination page after method executed.
