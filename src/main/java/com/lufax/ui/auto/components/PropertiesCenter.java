@@ -17,18 +17,18 @@ import java.util.HashMap;
 public class PropertiesCenter {
 
     @Autowired
-    public PropertiesFetcher propertiesFetcher;
+    private PropertiesFetcher propertiesFetcher;
 
-    public HashMap<String,String> runConfigs = null;
-    public HashMap<String,JSONObject> deviceConfigs = null;
-    public HashMap<String,JSONObject> dbConfigs = null;
+    private HashMap<String,String> runConfigs = null;
+    private HashMap<String,JSONObject> deviceConfigs = null;
+    private HashMap<String,JSONObject> dbConfigs = null;
 
     public synchronized PropertiesCenter init() throws IOException {
         if (runConfigs == null && deviceConfigs == null && dbConfigs == null) {
             propertiesFetcher.fetchAllConfigs();
-            this.runConfigs = propertiesFetcher.runConfigs;
-            this.deviceConfigs = propertiesFetcher.deviceConfigs;
-            this.dbConfigs = propertiesFetcher.dbConfigs;
+            this.runConfigs = propertiesFetcher.getRunConfigs();
+            this.deviceConfigs = propertiesFetcher.getDeviceConfigs();
+            this.dbConfigs = propertiesFetcher.getDbConfigs();
         }
         return this;
     }

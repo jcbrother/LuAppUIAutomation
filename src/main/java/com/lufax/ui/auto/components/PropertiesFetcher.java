@@ -19,9 +19,9 @@ public class PropertiesFetcher {
     private InputStream deviceConfigFileStream;
     private InputStream dbConfigFileStream;
 
-    public HashMap<String,String> runConfigs = new HashMap<String,String>();
-    public HashMap<String,JSONObject> deviceConfigs = new HashMap<String, JSONObject>();
-    public HashMap<String,JSONObject> dbConfigs = new HashMap<String, JSONObject>();
+    private HashMap<String,String> runConfigs = new HashMap<String,String>();
+    private HashMap<String,JSONObject> deviceConfigs = new HashMap<String, JSONObject>();
+    private HashMap<String,JSONObject> dbConfigs = new HashMap<String, JSONObject>();
 
 
     public PropertiesFetcher() {
@@ -84,4 +84,15 @@ public class PropertiesFetcher {
         return props;
     }
 
+    public HashMap<String, String> getRunConfigs() {
+        return runConfigs;
+    }
+
+    public HashMap<String, JSONObject> getDeviceConfigs() {
+        return deviceConfigs;
+    }
+
+    public HashMap<String, JSONObject> getDbConfigs() {
+        return dbConfigs;
+    }
 }

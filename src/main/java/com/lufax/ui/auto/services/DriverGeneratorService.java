@@ -10,6 +10,7 @@ import io.appium.java_client.ios.IOSDriver;
 import org.json.JSONObject;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -21,6 +22,7 @@ import java.net.URL;
  * Created by jiangcan on 16/8/4.
  */
 
+@Scope("singleton")
 @Service
 public class DriverGeneratorService {
 
@@ -48,7 +50,8 @@ public class DriverGeneratorService {
             capabilities.setCapability(LuCapabilityType.APP_PACKAGE,"com.lufax.android");
             capabilities.setCapability(LuCapabilityType.APP_ACTIVITY,"com.lufax.android.activity.HomeActivity");
         }else{
-            capabilities.setCapability(LuCapabilityType.APP_PATH,packageInfoAccessor.getPackageInfo().get(LuCapabilityType.APP_PATH));
+            appPath = packageInfoAccessor.getPackageInfo().get(LuCapabilityType.APP_PATH);
+            capabilities.setCapability(LuCapabilityType.APP_PATH, appPath);
         }
         return this;
     }

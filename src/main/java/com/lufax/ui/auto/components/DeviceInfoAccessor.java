@@ -19,7 +19,7 @@ import java.util.HashMap;
 public class DeviceInfoAccessor {
 
     @Autowired
-    public PropertiesCenter propertiesCenter;
+    private PropertiesCenter propertiesCenter;
 
     public JSONObject getDeviceInfo() throws IOException {
         HashMap<String, String> runConf = propertiesCenter.init().getRunConfigs();

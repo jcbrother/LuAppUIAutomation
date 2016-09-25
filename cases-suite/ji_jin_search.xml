@@ -4,10 +4,10 @@
     <cases exec-before-test="true" exec-after-test="true">
         <before-test-cases purpose="测试前准备" preserve-order="true">
             <case id="1" title="滑动去除启动图" priority="2">
-                <step id="1" src-page-name="启动图页面1" method="swipe" dest-page-name="启动图页面3" snapshoot="true" step-desc="滑动启动图至最后一页" >
+                <step id="1" src-page-name="启动图页面1" method="shortTapById" dest-page-name="启动图页面3" snapshoot="true" step-desc="滑动启动图至最后一页" >
                     <assert-key value="立即体验按钮" location-type="id" compare-value="sqlMapId:*/jetjiang" />
                 </step>
-                <step id="2" src-page-name="启动图页面3" method="click" dest-page-name="陆金所APP首页" snapshoot="true" step-desc="进陆金所APP首页" >
+                <step id="2" src-page-name="启动图页面3" method="shortTapById" dest-page-name="陆金所APP首页" snapshoot="true" step-desc="进陆金所APP首页" >
                     <method-param name="elemId" type="element-id" value="com.lufax.android://tsx1" />
                     <assert-key value="com.lufax.android://tsv1" location-type="id" compare-value="sqlMapId:*/jetjiang1" />
                 </step>
@@ -16,15 +16,15 @@
 
         <test-cases purpose="测试基金搜索功能" preserve-order="true">
             <case id="1" title="进投资理财列表页" priority="1">
-                <step id="1" src-page-name="首页" method="click" dest-page-name="投资理财列表页" snapshoot="true" step-desc="点击投资理财，进投资理财列表页" >
+                <step id="1" src-page-name="首页" method="shortTapById" dest-page-name="投资理财列表页" snapshoot="true" step-desc="点击投资理财，进投资理财列表页" >
                     <method-param name="elemId" type="element-id" value="com.lufax.android://tsx2" />
                     <assert-key value="com.lufax.android://tsv2" location-type="xpath"  compare-value="sqlMapId:*/jetjiang2"/>
                 </step>
-                <step id="2" src-page-name="投资理财列表页" method="click" dest-page-name="基金列表页" snapshoot="true" step-desc="点击基金，进投资理财基金列表页" >
+                <step id="2" src-page-name="投资理财列表页" method="shortTapById" dest-page-name="基金列表页" snapshoot="true" step-desc="点击基金，进投资理财基金列表页" >
                     <method-param name="elemId" type="element-id" value="com.lufax.android://tsx3" />
                     <assert-key value="com.lufax.android://tsv3" location-type="xpath"  compare-value="sqlMapId:*/jetjiang3"/>
                 </step>
-                <step id="3" src-page-name="基金列表页" method="click" dest-page-name="基金搜索页" snapshoot="true" step-desc="点击基金列表页搜索框，进基金搜索页" >
+                <step id="3" src-page-name="基金列表页" method="shortTapById" dest-page-name="基金搜索页" snapshoot="true" step-desc="点击基金列表页搜索框，进基金搜索页" >
                     <method-param name="elemId" type="element-id" value="com.lufax.android://tsx4" />
                     <assert-key value="com.lufax.android://tsv4" location-type="xpath"  compare-value="sqlMapId:*/jetjiang4"/>
                 </step>
@@ -33,7 +33,7 @@
 
         <after-test-cases purpose="测试后清理" preserve-order="true">
             <case id="1" title="关闭appium driver" priority="2">
-                <step id="1" src-page-name="基金搜索结果页" method="destory" dest-page-name="手机桌面" snapshoot="true" step-desc="关闭appium driver" >
+                <step id="1" src-page-name="基金搜索结果页" method="shortTapById" dest-page-name="手机桌面" snapshoot="true" step-desc="关闭appium driver" >
                     <assert-key value="com.lufax.android://tsv5" location-type="id" compare-value="桌面" />
                 </step>
             </case>

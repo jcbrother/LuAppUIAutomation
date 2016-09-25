@@ -18,10 +18,10 @@ import java.util.HashMap;
 public class PackageInfoAccessor {
 
     @Autowired
-    public PropertiesCenter propertiesCenter;
+    private PropertiesCenter propertiesCenter;
 
-    public String packageDir = System.getProperty("user.dir") + String.format("%spackages", File.separator);
-    public HashMap<String,String> packInfo = new HashMap<String,String>();
+    private String packageDir = System.getProperty("user.dir") + String.format("%spackages", File.separator);
+    private HashMap<String,String> packInfo = new HashMap<String,String>();
 
     public HashMap<String,String> getPackageInfo() throws IOException {
         String mobileOSType = propertiesCenter.init().getRunConfigs().get("mobile.os.type");

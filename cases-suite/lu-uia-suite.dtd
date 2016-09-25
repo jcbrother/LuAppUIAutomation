@@ -86,7 +86,7 @@ Here is a quick overview of the main parts of this DTD.
 <!ATTLIST step
     id CDATA #REQUIRED
     src-page-name CDATA #REQUIRED
-    method CDATA #REQUIRED
+    method (swipeUp|swipeDown|swipeLeft|swipeRight|swipeForBack|shortTapById|longTapById|shortTapByXpath|longTapByXpath) "shortTypeById"
     dest-page-name CDATA #REQUIRED
     snapshoot  (true | false) "false"
     step-desc CDATA #REQUIRED
