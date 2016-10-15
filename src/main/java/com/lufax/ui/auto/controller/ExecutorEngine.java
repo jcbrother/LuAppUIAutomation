@@ -6,16 +6,23 @@ import com.lufax.ui.auto.pageobj.BaseMobilePage;
 import com.lufax.ui.auto.services.CaseParserService;
 import com.lufax.ui.auto.services.DriverGeneratorService;
 import io.appium.java_client.AppiumDriver;
+import javassist.ClassPool;
+import javassist.CtClass;
+import javassist.CtMethod;
+import javassist.NotFoundException;
+import javassist.bytecode.CodeAttribute;
+import javassist.bytecode.LocalVariableAttribute;
+import javassist.bytecode.MethodInfo;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.net.MalformedURLException;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.LinkedList;
+import java.util.*;
 
 /**
  * Created by Jc on 16/9/10.
@@ -43,7 +50,7 @@ public class ExecutorEngine {
     }
 
 
-    public void execute() throws IOException, IllegalAccessException, InstantiationException, ClassNotFoundException, NoSuchMethodException {
+    public void execute() throws IOException, IllegalAccessException, InstantiationException, ClassNotFoundException, NoSuchMethodException, NotFoundException, InvocationTargetException {
         TestSuite testSuite = caseParserService.suiteParse();
         LinkedList<Cases> casesList = testSuite.getCasesList();
         for(Iterator<Cases> it = casesList.iterator();it.hasNext();){
@@ -64,10 +71,11 @@ public class ExecutorEngine {
 
     }
 
-    public void executeBaseTestCases(BaseTestCases baseTestCases) throws IOException, IllegalAccessException, ClassNotFoundException, InstantiationException, NoSuchMethodException {
+
+    public void executeBaseTestCases(BaseTestCases baseTestCases) throws IOException, IllegalAccessException, ClassNotFoundException, InstantiationException, NoSuchMethodException, NotFoundException, InvocationTargetException {
         boolean isPreserveOrder = baseTestCases.isPreserveOrder();
         LinkedList<Case> caseList = baseTestCases.getCaseList();
-        if(isPreserveOrder = false){
+        if(isPreserveOrder == false){
             Collections.sort(caseList);
         }
         for (Iterator<Case> it = caseList.iterator();it.hasNext();){
@@ -80,9 +88,10 @@ public class ExecutorEngine {
         }
     }
 
-    public void executeCase(Case aCase, boolean isPreserveOrder) throws IOException, IllegalAccessException, InstantiationException, ClassNotFoundException, NoSuchMethodException {
+
+    public void executeCase(Case aCase, boolean isPreserveOrder) throws IOException, IllegalAccessException, InstantiationException, ClassNotFoundException, NoSuchMethodException, NotFoundException, InvocationTargetException {
         LinkedList<Step> stepList = aCase.getSteps();
-        if(isPreserveOrder = false){
+        if(isPreserveOrder == false){
             Collections.sort(stepList);
         }
         for (Iterator<Step> it = stepList.iterator();it.hasNext();){
@@ -91,18 +100,80 @@ public class ExecutorEngine {
         }
     }
 
-    public void executeStep(Step step) throws ClassNotFoundException, IllegalAccessException, InstantiationException, MalformedURLException, NoSuchMethodException {
+
+    public void executeStep(Step step) throws ClassNotFoundException, IllegalAccessException, InstantiationException, MalformedURLException, NoSuchMethodException, NotFoundException, InvocationTargetException {
         Class clazz = Class.forName(fullClassName(step.getSrcPageName()));
         BaseMobilePage srcPage = ((BaseMobilePage) clazz.newInstance()).bindToDriver(oprDriver);
         String oprMethod = step.getMethod();
-        Method method = clazz.getMethod(oprMethod);
         LinkedList<MethodParam> methodParams = step.getMethodParams();
-
-
+        Method method = filterMethod(clazz, oprMethod);
+        LinkedList<Object> paramValues = getParameterValues(method,methodParams);
+        method.invoke(srcPage,new Object[]{paramValues.toArray()});
     }
+
 
     public String fullClassName(String className){
         return StringUtils.join(new String[]{this.pageObjsPackage, className},".");
     }
+
+
+    public Method filterMethod(Class clazz, String oprMethod){
+        Method[] methods = clazz.getDeclaredMethods();
+        for (Method method:methods){
+            String methodName = method.getName();
+            if (oprMethod.equals(methodName)){
+                return method;
+            }
+        }
+        return null;
+    }
+
+
+    public LinkedList<Object> getParameterValues(Method method, LinkedList<MethodParam> methodParams) throws NotFoundException {
+        LinkedList<Object> parameterValues = new LinkedList<Object>();
+        Class<?>[] paramTypes = method.getParameterTypes();
+        LinkedList<String> paramStrValues = getParameterStrValues(method, methodParams);
+        int paramNum = paramStrValues.size();
+        for(int i=0;i<paramNum;i++){
+            Class<?> paramType = paramTypes[i];
+            if(paramType == Integer.class){
+                Integer paramValue = Integer.parseInt(paramStrValues.get(i));
+                parameterValues.add(paramValue);
+            }else{
+                parameterValues.add(paramStrValues.get(i));
+            }
+        }
+        return parameterValues;
+    }
+
+
+    public LinkedList<String> getParameterStrValues(Method method, LinkedList<MethodParam> methodParams) throws NotFoundException {
+        LinkedList<String> paramStrValues = new LinkedList<String>();
+        ClassPool pool = ClassPool.getDefault();
+        CtClass cc = pool.get(method.getDeclaringClass().getName());
+        CtMethod cm = cc.getDeclaredMethod(method.getName());
+        MethodInfo mehtodInfo = cm.getMethodInfo();
+        CodeAttribute codeAttribute = mehtodInfo.getCodeAttribute();
+        LocalVariableAttribute attr = (LocalVariableAttribute) codeAttribute.getAttribute(LocalVariableAttribute.tag);
+        if(attr == null){
+            return null;
+        }
+        String[] paramNames = new String[method.getParameterTypes().length];
+        int pos = Modifier.isStatic(cm.getModifiers())?0:1;
+        for (int i = 0; i < paramNames.length; i++) {
+            paramNames[i] = attr.variableName(i + pos);
+        }
+        for (int i=0;i<paramNames.length;i++){
+            for(int j=0;j<methodParams.size();j++){
+                MethodParam methodParam = methodParams.get(j);
+                String methodParamName = methodParam.getName();
+                if(paramNames[i].equals(methodParamName)){
+                    paramStrValues.add(methodParam.getValue());
+                }
+            }
+        }
+        return paramStrValues;
+    }
+
 
 }
