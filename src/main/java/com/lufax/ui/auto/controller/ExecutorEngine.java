@@ -23,6 +23,7 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.net.MalformedURLException;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by Jc on 16/9/10.
@@ -42,14 +43,20 @@ public class ExecutorEngine {
     private String osType;
     private String pageObjsPackage = "com.lufax.ui.auto.pageobj";
 
-    //所有case执行过程中只能有一个AppiumDriver实例
+
+    /*
+    所有case执行过程中只能有一个AppiumDriver实例
+     */
     public ExecutorEngine init() throws IOException {
-        oprDriver = driverGeneratorService.getAppiumDriver();
+        oprDriver = driverGeneratorService.setLuCapabilities().getAppiumDriver();
+        oprDriver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         osType = propertiesCenter.init().getRunConfigs().get("mobile.os.type");
         return this;
     }
 
-
+    /*
+    用例执行入口函数
+     */
     public void execute() throws IOException, IllegalAccessException, InstantiationException, ClassNotFoundException, NoSuchMethodException, NotFoundException, InvocationTargetException {
         TestSuite testSuite = caseParserService.suiteParse();
         LinkedList<Cases> casesList = testSuite.getCasesList();
@@ -59,48 +66,53 @@ public class ExecutorEngine {
             boolean isExecAfterTest = cases.isExecAfterTest();
             if(isExecBeforeTest == true){
                 BeforeTestCases beforeTestCases = cases.getBeforeTestCases();
-                executeBaseTestCases(beforeTestCases);
+                executeBaseTestCases(beforeTestCases);  //执行测试前用例集
             }
             TestCases testCases = cases.getTestCases();
-            executeBaseTestCases(testCases);
+            executeBaseTestCases(testCases);  //执行测试用例集
             if(isExecAfterTest == true){
                 AfterTestCases afterTestCases = cases.getAfterTestCases();
-                executeBaseTestCases(afterTestCases);
+                executeBaseTestCases(afterTestCases);   //执行测试后用例集
             }
         }
-
     }
 
-
+    /*
+    执行基础测试用例集BeforeTestCases、BaseTestCases和AfterTestCases的函数
+     */
     public void executeBaseTestCases(BaseTestCases baseTestCases) throws IOException, IllegalAccessException, ClassNotFoundException, InstantiationException, NoSuchMethodException, NotFoundException, InvocationTargetException {
         boolean isPreserveOrder = baseTestCases.isPreserveOrder();
         LinkedList<Case> caseList = baseTestCases.getCaseList();
         if(isPreserveOrder == false){
-            Collections.sort(caseList);
+            Collections.sort(caseList);  //preserve_order为false时，按照用例id升序执行
         }
         for (Iterator<Case> it = caseList.iterator();it.hasNext();){
             Case aCase = it.next();
             String casePriority = aCase.getPriority();
             String priorityToRun = propertiesCenter.init().getRunConfigs().get("run.for.case.priority");
-            if(casePriority.equals(priorityToRun)) {
-                executeCase(aCase, isPreserveOrder);
+            if(casePriority.equals(priorityToRun) || priorityToRun.equals("0")) {
+                executeCase(aCase, isPreserveOrder); //执行一条用例
             }
         }
     }
 
-
+    /*
+    执行用例函数
+     */
     public void executeCase(Case aCase, boolean isPreserveOrder) throws IOException, IllegalAccessException, InstantiationException, ClassNotFoundException, NoSuchMethodException, NotFoundException, InvocationTargetException {
         LinkedList<Step> stepList = aCase.getSteps();
         if(isPreserveOrder == false){
-            Collections.sort(stepList);
+            Collections.sort(stepList);  //preserve_order为false时，按照步骤id升序执行
         }
         for (Iterator<Step> it = stepList.iterator();it.hasNext();){
             Step step = it.next();
-            executeStep(step);
+            executeStep(step);  //执行用例步骤
         }
     }
 
-
+    /*
+    执行用例步骤函数
+     */
     public void executeStep(Step step) throws ClassNotFoundException, IllegalAccessException, InstantiationException, MalformedURLException, NoSuchMethodException, NotFoundException, InvocationTargetException {
         Class clazz = Class.forName(fullClassName(step.getSrcPageName()));
         BaseMobilePage srcPage = ((BaseMobilePage) clazz.newInstance()).bindToDriver(oprDriver);
@@ -108,17 +120,21 @@ public class ExecutorEngine {
         LinkedList<MethodParam> methodParams = step.getMethodParams();
         Method method = filterMethod(clazz, oprMethod);
         LinkedList<Object> paramValues = getParameterValues(method,methodParams);
-        method.invoke(srcPage,new Object[]{paramValues.toArray()});
+        method.invoke(srcPage,paramValues.toArray());
     }
 
-
+    /*
+    生成全类名
+     */
     public String fullClassName(String className){
         return StringUtils.join(new String[]{this.pageObjsPackage, className},".");
     }
 
-
+    /*
+    获取方法
+     */
     public Method filterMethod(Class clazz, String oprMethod){
-        Method[] methods = clazz.getDeclaredMethods();
+        Method[] methods = clazz.getMethods();
         for (Method method:methods){
             String methodName = method.getName();
             if (oprMethod.equals(methodName)){
@@ -136,11 +152,16 @@ public class ExecutorEngine {
         int paramNum = paramStrValues.size();
         for(int i=0;i<paramNum;i++){
             Class<?> paramType = paramTypes[i];
+            String paramStrValue = paramStrValues.get(i);
             if(paramType == Integer.class){
-                Integer paramValue = Integer.parseInt(paramStrValues.get(i));
+                Integer paramValue = Integer.parseInt(paramStrValue);
                 parameterValues.add(paramValue);
-            }else{
-                parameterValues.add(paramStrValues.get(i));
+            }else if(paramType == int.class){
+                int paramValue = Integer.parseInt(paramStrValue);
+                parameterValues.add(paramValue);
+            } else {
+                String paramValue = paramStrValue;
+                parameterValues.add(paramValue);
             }
         }
         return parameterValues;

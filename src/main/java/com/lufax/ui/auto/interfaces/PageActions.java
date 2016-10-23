@@ -21,15 +21,25 @@ public interface PageActions {
     void swipeForBack();
 
     //id定位点击
-    void shortTapById(String byId);
+    void shortTapById(String elemId);
 
     //id定位长按
-    void longTapById(String byId);
+    void longTapById(String elemId);
+
+    //id定位输入
+    void sendKeysById(String elemId,String keyStr);
 
     //xpath定位点击
-    void shortTapByXpath(String xpath);
+    void shortTapByXpath(String elemXpath);
 
     //xpath定位长按
-    void longTapByXpath(String xpath);
+    void longTapByXpath(String elemXpath);
+
+    //xpath定位输入
+    void sendKeysByXpath(String elemXpath,String keyStr);
+
+
+
+
 
 }

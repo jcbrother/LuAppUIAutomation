@@ -46,6 +46,8 @@ public class DriverGeneratorService {
         capabilities.setCapability(LuCapabilityType.DEVICE_NAME, devInfo.getString(LuCapabilityType.DEVICE_NAME));
         capabilities.setCapability(LuCapabilityType.UDID, devInfo.getString(LuCapabilityType.UDID));
         capabilities.setCapability(LuCapabilityType.NO_RESET, isNoResetApp);
+//      capabilities.setCapability("unicodeKeyboard", "True");   输入中文
+//      capabilities.setCapability("resetKeyboard", "True");     输入中文
         if(isNoResetApp == true){
             capabilities.setCapability(LuCapabilityType.APP_PACKAGE,"com.lufax.android");
             capabilities.setCapability(LuCapabilityType.APP_ACTIVITY,"com.lufax.android.activity.HomeActivity");

@@ -36,6 +36,7 @@ public class CaseParserService {
         return String.format("%s%s%s",suiteFileDir, File.separator, suiteFile);
     }
 
+    //解析测试用例xml文档根元素，封装为用例集对象
     public TestSuite suiteParse() throws IOException {
         File suiteFile = new File(this.getSuiteFile());
         SAXReader saxReader = new SAXReader();
@@ -50,7 +51,7 @@ public class CaseParserService {
         return (TestSuite) this.elementWrap(suiteElem);
         }
 
-
+    //递归解析测试用例xml文档元素，封装为用例元素对象
     public BaseSuiteElementObject elementWrap(Element element){
         if(element != null){
             String elemName = element.getName();
@@ -163,6 +164,7 @@ public class CaseParserService {
         return null;
     }
 
+    //设置测试用例xml文档元素属性值
     public void setPropertyFields(Element element, BaseSuiteElementObject elementObject) {
         String elemName = element.getName();
         for (Iterator it = element.attributeIterator(); it.hasNext(); ) {
@@ -240,6 +242,7 @@ public class CaseParserService {
         return userDefinedClassNameBuffer.toString();
     }
 
+    //测试main函数
     public static void main(String[] args) throws IOException {
         System.out.println(System.getProperty("user.dir") + String.format("%scases-suite", File.separator));
         ApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
