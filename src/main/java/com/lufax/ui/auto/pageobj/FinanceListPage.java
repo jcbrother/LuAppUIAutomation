@@ -7,8 +7,8 @@ import io.appium.java_client.AppiumDriver;
  */
 public class FinanceListPage extends BaseMobilePage{
 
-    private String pageName = "升级引导页";
-    private String pageDescription = "APP启动升级引导提示页";
+    private String pageName = "投资理财列表页";
+    private String pageDescription = "投资理财大列表页";
 
     public String getPageName() {
         return pageName;

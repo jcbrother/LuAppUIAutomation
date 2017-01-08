@@ -11,6 +11,7 @@ import java.util.HashMap;
 
 /**
  * Created by Jc on 16/8/7.
+ * 移动端APP页面基础类
  */
 
 public class BaseMobilePage implements PageActions{
