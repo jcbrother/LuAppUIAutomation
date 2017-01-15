@@ -2,6 +2,7 @@ package com.lufax.ui.auto.components;
 
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -12,8 +13,8 @@ import java.util.HashMap;
  * Created by Jc on 16/9/11.
  */
 
-@Scope("singleton")
 @Component
+@Scope(BeanDefinition.SCOPE_SINGLETON)
 public class PropertiesCenter {
 
     @Autowired
