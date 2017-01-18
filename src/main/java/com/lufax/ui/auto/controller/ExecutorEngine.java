@@ -1,5 +1,8 @@
 package com.lufax.ui.auto.controller;
 
+import com.lufax.ui.auto.anotations.CaseExecutor;
+import com.lufax.ui.auto.anotations.StepExecutor;
+import com.lufax.ui.auto.anotations.SuiteExecutor;
 import com.lufax.ui.auto.caseobj.*;
 import com.lufax.ui.auto.components.PropertiesCenter;
 import com.lufax.ui.auto.pageobj.BaseMobilePage;
@@ -80,6 +83,7 @@ public class ExecutorEngine {
     /*
     执行基础测试用例集BeforeTestCases、BaseTestCases和AfterTestCases的函数
      */
+    @SuiteExecutor(description = "执行用例集")
     public void executeBaseTestCases(BaseTestCases baseTestCases) throws IOException, IllegalAccessException, ClassNotFoundException, InstantiationException, NoSuchMethodException, NotFoundException, InvocationTargetException {
         boolean isPreserveOrder = baseTestCases.isPreserveOrder();
         LinkedList<Case> caseList = baseTestCases.getCaseList();
@@ -99,6 +103,7 @@ public class ExecutorEngine {
     /*
     执行用例函数
      */
+    @CaseExecutor(description = "执行用例")
     public void executeCase(Case aCase, boolean isPreserveOrder) throws IOException, IllegalAccessException, InstantiationException, ClassNotFoundException, NoSuchMethodException, NotFoundException, InvocationTargetException {
         LinkedList<Step> stepList = aCase.getSteps();
         if(isPreserveOrder == false){
@@ -113,6 +118,7 @@ public class ExecutorEngine {
     /*
     执行用例步骤函数
      */
+    @StepExecutor(description = "执行用例步骤")
     public void executeStep(Step step) throws ClassNotFoundException, IllegalAccessException, InstantiationException, MalformedURLException, NoSuchMethodException, NotFoundException, InvocationTargetException {
         Class clazz = Class.forName(fullClassName(step.getSrcPageName()));
         BaseMobilePage srcPage = ((BaseMobilePage) clazz.newInstance()).bindToDriver(oprDriver);

@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="aspectjrt-1.8.9">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/ext-lib/aspectjrt-1.8.9.jar!/" />
+      <root url="jar://$PROJECT_DIR$/ext-lib/aspectjweaver-1.8.9.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

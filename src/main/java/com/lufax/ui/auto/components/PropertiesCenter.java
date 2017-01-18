@@ -6,6 +6,7 @@ import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
 import java.io.IOException;
 import java.util.HashMap;
 
@@ -24,6 +25,7 @@ public class PropertiesCenter {
     private HashMap<String,JSONObject> deviceConfigs = null;
     private HashMap<String,JSONObject> dbConfigs = null;
 
+//    @PostConstruct
     public synchronized PropertiesCenter init() throws IOException {
         if (runConfigs == null && deviceConfigs == null && dbConfigs == null) {
             propertiesFetcher.fetchAllConfigs();
