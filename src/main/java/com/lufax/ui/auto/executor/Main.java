@@ -1,13 +1,9 @@
 package com.lufax.ui.auto.executor;
 
-import com.lufax.ui.auto.services.DriverGeneratorService;
-import io.appium.java_client.AppiumDriver;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import java.io.File;
 import java.io.IOException;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Created by Jc on 16/8/7.
@@ -27,6 +23,7 @@ public class Main {
 //        }
 
         MyAspectJDemoClass ma = (MyAspectJDemoClass) ctx.getBean("myAspectJDemoClass");
+        ma.hello();
         ma.hello();
     }
 }
