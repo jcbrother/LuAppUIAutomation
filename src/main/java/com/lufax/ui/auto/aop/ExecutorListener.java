@@ -1,7 +1,9 @@
 package com.lufax.ui.auto.aop;
 
 import com.lufax.ui.auto.caseobj.Step;
+import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
@@ -35,6 +37,11 @@ public class ExecutorListener {
     public boolean caseExecutionListener(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
         Object result = proceedingJoinPoint.proceed();
         return (Boolean) result;
+    }
+
+    @After("executeSuite()")
+    public void suiteExecutionListener(JoinPoint joinPoint){
+        //生成报告
     }
 
 }
