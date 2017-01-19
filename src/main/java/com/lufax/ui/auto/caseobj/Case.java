@@ -15,6 +15,7 @@ public class Case extends BaseSuiteElementObject implements Comparable{
     private String title;
     private String priority;
     private LinkedList<Step> steps = new LinkedList<Step>();
+    private boolean caseResultPass = true;
 
     public Integer getId() {
         return id;
@@ -50,6 +51,14 @@ public class Case extends BaseSuiteElementObject implements Comparable{
     public Case setSteps(LinkedList<Step> steps) {
         this.steps = steps;
         return this;
+    }
+
+    public boolean isCaseResultPass() {
+        return caseResultPass;
+    }
+
+    public void setCaseResultPass(boolean caseResultPass) {
+        this.caseResultPass = caseResultPass;
     }
 
     public String getAllStepDesc(){

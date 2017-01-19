@@ -2,7 +2,6 @@ package com.lufax.ui.auto.caseobj;
 
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 
 /**
@@ -18,6 +17,7 @@ public class Step extends BaseSuiteElementObject implements Comparable{
     private String destPageName;
     private boolean snapshoot;
     private String stepDesc;
+    private boolean stepResultPass;
 
     private LinkedList<MethodParam> methodParams;
     private LinkedList<AssertKey> assertKeys;
@@ -92,6 +92,14 @@ public class Step extends BaseSuiteElementObject implements Comparable{
     public Step setAssertKeys(LinkedList<AssertKey> assertKeys) {
         this.assertKeys = assertKeys;
         return this;
+    }
+
+    public boolean isStepResultPass() {
+        return stepResultPass;
+    }
+
+    public void setStepResultPass(boolean stepResultPass) {
+        this.stepResultPass = stepResultPass;
     }
 
     @Override

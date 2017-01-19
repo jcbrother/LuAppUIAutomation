@@ -104,22 +104,27 @@ public class ExecutorEngine {
     执行用例函数
      */
     @CaseExecutor(description = "执行用例")
-    public void executeCase(Case aCase, boolean isPreserveOrder) throws IOException, IllegalAccessException, InstantiationException, ClassNotFoundException, NoSuchMethodException, NotFoundException, InvocationTargetException {
+    public boolean executeCase(Case aCase, boolean isPreserveOrder) throws IOException, IllegalAccessException, InstantiationException, ClassNotFoundException, NoSuchMethodException, NotFoundException, InvocationTargetException {
         LinkedList<Step> stepList = aCase.getSteps();
         if(isPreserveOrder == false){
             Collections.sort(stepList);  //preserve_order为false时，按照步骤id升序执行
         }
+        boolean stepResult;
         for (Iterator<Step> it = stepList.iterator();it.hasNext();){
             Step step = it.next();
-            executeStep(step);  //执行用例步骤
+            stepResult = executeStep(step).isStepResultPass();  //执行用例步骤
+            if(stepResult == false){
+                aCase.setCaseResultPass(stepResult);
+            }
         }
+        return aCase.isCaseResultPass();
     }
 
     /*
     执行用例步骤函数
      */
     @StepExecutor(description = "执行用例步骤")
-    public void executeStep(Step step) throws ClassNotFoundException, IllegalAccessException, InstantiationException, MalformedURLException, NoSuchMethodException, NotFoundException, InvocationTargetException {
+    public Step executeStep(Step step) throws ClassNotFoundException, IllegalAccessException, InstantiationException, MalformedURLException, NoSuchMethodException, NotFoundException, InvocationTargetException {
         Class clazz = Class.forName(fullClassName(step.getSrcPageName()));
         BaseMobilePage srcPage = ((BaseMobilePage) clazz.newInstance()).bindToDriver(oprDriver);
         String oprMethod = step.getMethod();
@@ -127,6 +132,7 @@ public class ExecutorEngine {
         Method method = filterMethod(clazz, oprMethod);
         LinkedList<Object> paramValues = getParameterValues(method,methodParams);
         method.invoke(srcPage,paramValues.toArray());
+        return step;
     }
 
     /*
@@ -150,7 +156,9 @@ public class ExecutorEngine {
         return null;
     }
 
-
+    /*
+    解析方法参数值
+    */
     public LinkedList<Object> getParameterValues(Method method, LinkedList<MethodParam> methodParams) throws NotFoundException {
         LinkedList<Object> parameterValues = new LinkedList<Object>();
         Class<?>[] paramTypes = method.getParameterTypes();
@@ -174,6 +182,9 @@ public class ExecutorEngine {
     }
 
 
+    /*
+    获取方法参数列表字符串字
+    */
     public LinkedList<String> getParameterStrValues(Method method, LinkedList<MethodParam> methodParams) throws NotFoundException {
         LinkedList<String> paramStrValues = new LinkedList<String>();
         ClassPool pool = ClassPool.getDefault();
