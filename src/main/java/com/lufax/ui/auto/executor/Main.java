@@ -1,9 +1,13 @@
 package com.lufax.ui.auto.executor;
 
+import com.lufax.ui.auto.caseobj.Step;
+import com.lufax.ui.auto.controller.ExecutorEngine;
+import javassist.NotFoundException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 
 /**
  * Created by Jc on 16/8/7.
@@ -11,7 +15,7 @@ import java.io.IOException;
 public class Main {
     public static ApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
 
-    public static void main(String[] args) throws IOException, InterruptedException {
+    public static void main(String[] args) throws IOException, InterruptedException, IllegalAccessException, InvocationTargetException, InstantiationException, NotFoundException, NoSuchMethodException, ClassNotFoundException {
 //        DriverGeneratorService driverGeneratorService = (DriverGeneratorService) ctx.getBean("driverGeneratorService");
 //        AppiumDriver driver = driverGeneratorService.setLuCapabilities().getAppiumDriver();
 //        driver.manage().timeouts().implicitlyWait(3000, TimeUnit.MILLISECONDS);
@@ -22,8 +26,6 @@ public class Main {
 //            Thread.sleep(3000);
 //        }
 
-        MyAspectJDemoClass ma = (MyAspectJDemoClass) ctx.getBean("myAspectJDemoClass");
-        ma.hello();
-        ma.hello();
+
     }
 }

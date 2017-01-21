@@ -5,6 +5,7 @@ import com.lufax.ui.auto.anotations.StepExecutor;
 import com.lufax.ui.auto.anotations.SuiteExecutor;
 import com.lufax.ui.auto.caseobj.*;
 import com.lufax.ui.auto.components.PropertiesCenter;
+import com.lufax.ui.auto.interfaces.BeanSelfAware;
 import com.lufax.ui.auto.pageobj.BaseMobilePage;
 import com.lufax.ui.auto.services.CaseParserService;
 import com.lufax.ui.auto.services.DriverGeneratorService;
@@ -20,6 +21,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
+import javax.annotation.PostConstruct;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -33,28 +35,35 @@ import java.util.concurrent.TimeUnit;
  */
 
 @Controller
-public class ExecutorEngine {
+public class ExecutorEngine implements BeanSelfAware {
 
     @Autowired
-    private CaseParserService caseParserService;
+    public CaseParserService caseParserService;
     @Autowired
-    private PropertiesCenter propertiesCenter;
+    public PropertiesCenter propertiesCenter;
     @Autowired
-    private DriverGeneratorService driverGeneratorService;
+    public DriverGeneratorService driverGeneratorService;
 
-    private AppiumDriver oprDriver;
-    private String osType;
-    private String pageObjsPackage = "com.lufax.ui.auto.pageobj";
+    public AppiumDriver oprDriver;
+    public String osType;
+    public String pageObjsPackage = "com.lufax.ui.auto.pageobj";
+    public ExecutorEngine self;
 
+
+
+    @Override
+    public void setSelf(Object executorEngine) {
+        this.self = (ExecutorEngine) executorEngine;
+    }
 
     /*
     所有case执行过程中只能有一个AppiumDriver实例
      */
-    public ExecutorEngine init() throws IOException {
+    @PostConstruct
+    public void init() throws IOException {
         oprDriver = driverGeneratorService.setLuCapabilities().getAppiumDriver();
         oprDriver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-        osType = propertiesCenter.init().getRunConfigs().get("mobile.os.type");
-        return this;
+        osType = propertiesCenter.getRunConfigs().get("mobile.os.type");
     }
 
     /*
@@ -69,13 +78,13 @@ public class ExecutorEngine {
             boolean isExecAfterTest = cases.isExecAfterTest();
             if(isExecBeforeTest == true){
                 BeforeTestCases beforeTestCases = cases.getBeforeTestCases();
-                executeBaseTestCases(beforeTestCases);  //执行测试前用例集
+                self.executeBaseTestCases(beforeTestCases);  //执行测试前用例集
             }
             TestCases testCases = cases.getTestCases();
-            executeBaseTestCases(testCases);  //执行测试用例集
+            self.executeBaseTestCases(testCases);  //执行测试用例集
             if(isExecAfterTest == true){
                 AfterTestCases afterTestCases = cases.getAfterTestCases();
-                executeBaseTestCases(afterTestCases);   //执行测试后用例集
+                self.executeBaseTestCases(afterTestCases);   //执行测试后用例集
             }
         }
     }
@@ -83,7 +92,7 @@ public class ExecutorEngine {
     /*
     执行基础测试用例集BeforeTestCases、BaseTestCases和AfterTestCases的函数
      */
-    @SuiteExecutor(description = "执行用例集")
+    @SuiteExecutor(description = "suite")
     public void executeBaseTestCases(BaseTestCases baseTestCases) throws IOException, IllegalAccessException, ClassNotFoundException, InstantiationException, NoSuchMethodException, NotFoundException, InvocationTargetException {
         boolean isPreserveOrder = baseTestCases.isPreserveOrder();
         LinkedList<Case> caseList = baseTestCases.getCaseList();
@@ -93,9 +102,9 @@ public class ExecutorEngine {
         for (Iterator<Case> it = caseList.iterator();it.hasNext();){
             Case aCase = it.next();
             String casePriority = aCase.getPriority();
-            String priorityToRun = propertiesCenter.init().getRunConfigs().get("run.for.case.priority");
+            String priorityToRun = propertiesCenter.getRunConfigs().get("run.for.case.priority");
             if(casePriority.equals(priorityToRun) || priorityToRun.equals("0")) {
-                executeCase(aCase, isPreserveOrder); //执行一条用例
+                self.executeCase(aCase, isPreserveOrder); //执行一条用例
             }
         }
     }
@@ -103,7 +112,7 @@ public class ExecutorEngine {
     /*
     执行用例函数
      */
-    @CaseExecutor(description = "执行用例")
+    @CaseExecutor(description = "case")
     public boolean executeCase(Case aCase, boolean isPreserveOrder) throws IOException, IllegalAccessException, InstantiationException, ClassNotFoundException, NoSuchMethodException, NotFoundException, InvocationTargetException {
         LinkedList<Step> stepList = aCase.getSteps();
         if(isPreserveOrder == false){
@@ -112,7 +121,7 @@ public class ExecutorEngine {
         boolean stepResult;
         for (Iterator<Step> it = stepList.iterator();it.hasNext();){
             Step step = it.next();
-            stepResult = executeStep(step).isStepResultPass();  //执行用例步骤
+            stepResult = self.executeStep(step).isStepResultPass();  //执行用例步骤
             if(stepResult == false){
                 aCase.setCaseResultPass(stepResult);
             }
@@ -123,7 +132,7 @@ public class ExecutorEngine {
     /*
     执行用例步骤函数
      */
-    @StepExecutor(description = "执行用例步骤")
+    @StepExecutor(description = "step")
     public Step executeStep(Step step) throws ClassNotFoundException, IllegalAccessException, InstantiationException, MalformedURLException, NoSuchMethodException, NotFoundException, InvocationTargetException {
         Class clazz = Class.forName(fullClassName(step.getSrcPageName()));
         BaseMobilePage srcPage = ((BaseMobilePage) clazz.newInstance()).bindToDriver(oprDriver);
@@ -131,7 +140,7 @@ public class ExecutorEngine {
         LinkedList<MethodParam> methodParams = step.getMethodParams();
         Method method = filterMethod(clazz, oprMethod);
         LinkedList<Object> paramValues = getParameterValues(method,methodParams);
-        method.invoke(srcPage,paramValues.toArray());
+        method.invoke(srcPage, paramValues.toArray());
         return step;
     }
 

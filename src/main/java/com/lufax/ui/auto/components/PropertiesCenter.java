@@ -25,15 +25,14 @@ public class PropertiesCenter {
     private HashMap<String,JSONObject> deviceConfigs = null;
     private HashMap<String,JSONObject> dbConfigs = null;
 
-//    @PostConstruct
-    public synchronized PropertiesCenter init() throws IOException {
+    @PostConstruct
+    public void init() throws IOException {
         if (runConfigs == null && deviceConfigs == null && dbConfigs == null) {
             propertiesFetcher.fetchAllConfigs();
             this.runConfigs = propertiesFetcher.getRunConfigs();
             this.deviceConfigs = propertiesFetcher.getDeviceConfigs();
             this.dbConfigs = propertiesFetcher.getDbConfigs();
         }
-        return this;
     }
 
     public HashMap<String, String> getRunConfigs() {

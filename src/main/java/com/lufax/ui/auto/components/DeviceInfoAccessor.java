@@ -22,8 +22,8 @@ public class DeviceInfoAccessor {
     private PropertiesCenter propertiesCenter;
 
     public JSONObject getDeviceInfo() throws IOException {
-        HashMap<String, String> runConf = propertiesCenter.init().getRunConfigs();
-        HashMap<String, JSONObject> devConf = propertiesCenter.init().getDeviceConfigs();
+        HashMap<String, String> runConf = propertiesCenter.getRunConfigs();
+        HashMap<String, JSONObject> devConf = propertiesCenter.getDeviceConfigs();
         String devName = runConf.get("mobile.device");
         JSONObject devInfo = devConf.get(devName);
         return devInfo;

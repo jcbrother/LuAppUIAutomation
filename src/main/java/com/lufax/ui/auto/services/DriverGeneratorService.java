@@ -40,7 +40,7 @@ public class DriverGeneratorService {
 
     public DriverGeneratorService setLuCapabilities() throws IOException {
         devInfo = deviceInfoAccessor.getDeviceInfo();
-        isNoResetApp = Boolean.parseBoolean(propertiesCenter.init().getRunConfigs().get("app.no.reset"));
+        isNoResetApp = Boolean.parseBoolean(propertiesCenter.getRunConfigs().get("app.no.reset"));
         capabilities.setCapability(LuCapabilityType.PLATFORM_NAME, devInfo.getString(LuCapabilityType.PLATFORM_NAME));
         capabilities.setCapability(LuCapabilityType.PLATFORM_VERSION, devInfo.getString(LuCapabilityType.PLATFORM_VERSION));
         capabilities.setCapability(LuCapabilityType.DEVICE_NAME, devInfo.getString(LuCapabilityType.DEVICE_NAME));

@@ -16,7 +16,9 @@ public class UIAExecutor {
     public static ApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
 
     public static void main(String[] args) throws IOException, InterruptedException, IllegalAccessException, ClassNotFoundException, InstantiationException, NoSuchMethodException, NotFoundException, InvocationTargetException {
-        ExecutorEngine caseExecutor = ((ExecutorEngine) ctx.getBean("executorEngine")).init();
+//        ExecutorEngine caseExecutor = ((ExecutorEngine) ctx.getBean("executorEngine")).init();
+        ExecutorEngine caseExecutor = ((ExecutorEngine) ctx.getBean("executorEngine"));
+//        caseExecutor.setSelf(caseExecutor);
         caseExecutor.execute();
     }
 }

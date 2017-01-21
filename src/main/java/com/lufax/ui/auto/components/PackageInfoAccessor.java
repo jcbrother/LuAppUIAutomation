@@ -24,9 +24,9 @@ public class PackageInfoAccessor {
     private HashMap<String,String> packInfo = new HashMap<String,String>();
 
     public HashMap<String,String> getPackageInfo() throws IOException {
-        String mobileOSType = propertiesCenter.init().getRunConfigs().get("mobile.os.type");
-        String packageName = propertiesCenter.init().getRunConfigs().get("package.name");
-        String packageVersion = propertiesCenter.init().getRunConfigs().get("package.version");
+        String mobileOSType = propertiesCenter.getRunConfigs().get("mobile.os.type");
+        String packageName = propertiesCenter.getRunConfigs().get("package.name");
+        String packageVersion = propertiesCenter.getRunConfigs().get("package.version");
         String appUrl = "";
         if ("android".equalsIgnoreCase(mobileOSType)) {
             appUrl = packageDir + String.format("%s%s%s%s", File.separator, "Android", File.separator, packageName);

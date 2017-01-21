@@ -32,7 +32,7 @@ public class CaseParserService {
 
 
     public String getSuiteFile() throws IOException {
-        String suiteFile = propertiesCenter.init().getRunConfigs().get("cases.suite");
+        String suiteFile = propertiesCenter.getRunConfigs().get("cases.suite");
         return String.format("%s%s%s",suiteFileDir, File.separator, suiteFile);
     }
 
