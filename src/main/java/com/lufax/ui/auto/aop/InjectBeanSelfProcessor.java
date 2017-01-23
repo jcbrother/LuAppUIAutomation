@@ -28,4 +28,5 @@ public class InjectBeanSelfProcessor implements BeanPostProcessor {
         }
         return bean;
     }
+
 }
