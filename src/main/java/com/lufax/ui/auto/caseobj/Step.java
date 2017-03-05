@@ -17,6 +17,7 @@ public class Step extends BaseSuiteElementObject implements Comparable{
     private String destPageName;
     private boolean snapshoot;
     private String stepDesc;
+    private String expectResult;
     private boolean stepResultPass = true;
 
     private LinkedList<MethodParam> methodParams;
@@ -92,6 +93,14 @@ public class Step extends BaseSuiteElementObject implements Comparable{
     public Step setAssertKeys(LinkedList<AssertKey> assertKeys) {
         this.assertKeys = assertKeys;
         return this;
+    }
+
+    public String getExpectResult() {
+        return expectResult;
+    }
+
+    public void setExpectResult(String expectResult) {
+        this.expectResult = expectResult;
     }
 
     public boolean isStepResultPass() {

@@ -210,6 +210,8 @@ public class CaseParserService {
                     ((Step) elementObject).setSnapshoot(Boolean.parseBoolean(attrValue));
                 } else if ("step-desc".equalsIgnoreCase(attrName)) {
                     ((Step) elementObject).setStepDesc(attrValue);
+                } else if ("expect-result".equalsIgnoreCase(attrName)) {
+                    ((Step) elementObject).setExpectResult(attrValue);
                 }
             } else if ("method-param".equalsIgnoreCase(elemName)) {
                 if ("name".equalsIgnoreCase(attrName)) {

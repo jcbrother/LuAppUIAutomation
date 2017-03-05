@@ -48,13 +48,8 @@ public class ExecutorEngine implements BeanSelfAware {
     public String osType;
     public String pageObjsPackage = "com.lufax.ui.auto.pageobj";
     public ExecutorEngine self;
+    public TestSuite testSuite;
 
-
-
-    @Override
-    public void setSelf(Object executorEngine) {
-        this.self = (ExecutorEngine) executorEngine;
-    }
 
     /*
     所有case执行过程中只能有一个AppiumDriver实例
@@ -64,6 +59,12 @@ public class ExecutorEngine implements BeanSelfAware {
         oprDriver = driverGeneratorService.setLuCapabilities().getAppiumDriver();
         oprDriver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         osType = propertiesCenter.getRunConfigs().get("mobile.os.type");
+        testSuite = caseParserService.suiteParse();
+    }
+
+    @Override
+    public void setSelf(Object executorEngine) {
+        this.self = (ExecutorEngine) executorEngine;
     }
 
     /*
@@ -73,11 +74,19 @@ public class ExecutorEngine implements BeanSelfAware {
         return oprDriver;
     }
 
+
+    /*
+    获取当前测试集
+     */
+    public TestSuite getTestSuite(){
+        return testSuite;
+    }
+
+
     /*
     用例执行入口函数
      */
     public void execute() throws IOException, IllegalAccessException, InstantiationException, ClassNotFoundException, NoSuchMethodException, NotFoundException, InvocationTargetException {
-        TestSuite testSuite = caseParserService.suiteParse();
         LinkedList<Cases> casesList = testSuite.getCasesList();
         for(Iterator<Cases> it = casesList.iterator();it.hasNext();){
             Cases cases = it.next();

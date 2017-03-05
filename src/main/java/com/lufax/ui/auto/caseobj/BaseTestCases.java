@@ -41,4 +41,26 @@ public class BaseTestCases extends BaseSuiteElementObject{
         this.caseList = caseList;
         return this;
     }
+
+    public Integer countPass(){
+        Integer count = 0;
+        for(Case aCase:caseList){
+            if (aCase.isCaseResultPass() == true){
+                count += 1;
+            }
+        }
+        return count;
+    }
+
+    public Integer countFail(){
+        Integer count = 0;
+        for(Case aCase:caseList){
+            if (aCase.isCaseResultPass() == false){
+                count += 1;
+            }
+        }
+        return count;
+    }
+
+
 }

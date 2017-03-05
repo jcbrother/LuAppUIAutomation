@@ -87,6 +87,7 @@ Here is a quick overview of the main parts of this DTD.
 @attr dest-page-name    destination page after method executed.
 @attr snapshoot         snapshoot or not after executed method.
 @attr step-desc         step descriptions.
+@attr expect-result     expect result description.
 -->
 <!ATTLIST step
     id CDATA #REQUIRED
@@ -97,6 +98,7 @@ Here is a quick overview of the main parts of this DTD.
     snapshoot  (true | false) "false"
         snapshoot CDATA #REQUIRED
     step-desc CDATA #REQUIRED
+    expect-result CDATA #REQUIRED
 >
 
 
