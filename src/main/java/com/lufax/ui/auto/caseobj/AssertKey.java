@@ -12,6 +12,7 @@ public class AssertKey extends BaseSuiteElementObject{
     private String value;
     private String locationType;
     private String compareValue;
+    private String compareType;
 
     public String getValue() {
         return value;
@@ -39,4 +40,13 @@ public class AssertKey extends BaseSuiteElementObject{
         this.compareValue = compareValue;
         return this;
     }
+
+    public String getCompareType() {
+        return compareType;
+    }
+
+    public void setCompareType(String compareType) {
+        this.compareType = compareType;
+    }
+
 }

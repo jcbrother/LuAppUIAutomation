@@ -224,6 +224,8 @@ public class CaseParserService {
                     ((AssertKey) elementObject).setValue(attrValue);
                 } else if ("location-type".equalsIgnoreCase(attrName)) {
                     ((AssertKey) elementObject).setLocationType(attrValue);
+                } else if ("compare-type".equalsIgnoreCase(attrName)) {
+                    ((AssertKey) elementObject).setCompareType(attrValue);
                 } else if ("compare-value".equalsIgnoreCase(attrName)) {
                     ((AssertKey) elementObject).setCompareValue(attrValue);
                 }

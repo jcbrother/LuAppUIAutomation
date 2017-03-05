@@ -26,6 +26,9 @@ public class Main {
 //            Thread.sleep(3000);
 //        }
 
+        boolean result = true;
+        Boolean br = (Boolean) result;
+        System.out.println(br.booleanValue());
 
     }
 }

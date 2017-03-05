@@ -17,7 +17,7 @@ public class Step extends BaseSuiteElementObject implements Comparable{
     private String destPageName;
     private boolean snapshoot;
     private String stepDesc;
-    private boolean stepResultPass;
+    private boolean stepResultPass = true;
 
     private LinkedList<MethodParam> methodParams;
     private LinkedList<AssertKey> assertKeys;

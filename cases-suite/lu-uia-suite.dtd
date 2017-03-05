@@ -1,6 +1,6 @@
 <!--
 Here is a quick overview of the main parts of this DTD.
-1. It's for lu-uia test suite definition.
+1. It's for uia test suite definition.
 2. Test engineers just have to design test suites according to this DTD, and run it directly by executing engine. 
 -->
 
@@ -24,7 +24,9 @@ Here is a quick overview of the main parts of this DTD.
 -->
 <!ATTLIST cases 
     exec-before-test (true | false) "true"
+        exec-before-test CDATA #REQUIRED
     exec-after-test (true | false) "true"
+        exec-after-test CDATA #REQUIRED
 >
 
 
@@ -36,6 +38,7 @@ Here is a quick overview of the main parts of this DTD.
 <!ATTLIST before-test-cases 
     purpose CDATA #REQUIRED
     preserve-order (true | false) "true"
+        preserve-order CDATA #REQUIRED
 >
 
 
@@ -47,6 +50,7 @@ Here is a quick overview of the main parts of this DTD.
 <!ATTLIST test-cases 
     purpose CDATA #REQUIRED
     preserve-order (true | false) "true"
+        preserve-order CDATA #REQUIRED
 >
 
 
@@ -58,6 +62,7 @@ Here is a quick overview of the main parts of this DTD.
 <!ATTLIST after-test-cases 
     purpose CDATA #REQUIRED
     preserve-order (true | false) "true"
+        preserve-order CDATA #REQUIRED
 >
 
 
@@ -87,8 +92,10 @@ Here is a quick overview of the main parts of this DTD.
     id CDATA #REQUIRED
     src-page-name CDATA #REQUIRED
     method (swipeUp|swipeDown|swipeLeft|swipeRight|swipeForBack|shortTapById|longTapById|shortTapByXpath|longTapByXpath|sendKeysById|sendKeysByXpath) "shortTypeById"
+        method CDATA #REQUIRED
     dest-page-name CDATA #REQUIRED
     snapshoot  (true | false) "false"
+        snapshoot CDATA #REQUIRED
     step-desc CDATA #REQUIRED
 >
 
@@ -96,13 +103,17 @@ Here is a quick overview of the main parts of this DTD.
 <!ELEMENT assert-key ANY >
 <!-- Attributes description: 
 @attr value              element id or xpath etc.
-@attr location-type      locate element by id or xpath
+@attr location-type      locate element by id or
+@attr compare-type       define comparing type
 @attr compare-value      assert by something from data source or static source.
 -->
 <!ATTLIST assert-key
     value CDATA #REQUIRED
     location-type ( id | xpath )  "id"
-    compare-value CDATA #REQUIRED
+        location-type CDATA #REQUIRED
+    compare-type ( equal | not-equal | visible | invisible ) "equal"
+        compare-type CDATA #REQUIRED
+    compare-value CDATA #IMPLIED
 >
 
 
@@ -114,7 +125,9 @@ Here is a quick overview of the main parts of this DTD.
 -->
 <!ATTLIST method-param
     name (elemId | elemXpath | keyStr) "elemId"
+        name CDATA #REQUIRED
     type (element-id | element-xpath | input-string) "id"
+        type CDATA #REQUIRED
     value CDATA #REQUIRED
 >
 

@@ -67,6 +67,13 @@ public class ExecutorEngine implements BeanSelfAware {
     }
 
     /*
+    获取当前驱动
+     */
+    public AppiumDriver getOprDriver(){
+        return oprDriver;
+    }
+
+    /*
     用例执行入口函数
      */
     public void execute() throws IOException, IllegalAccessException, InstantiationException, ClassNotFoundException, NoSuchMethodException, NotFoundException, InvocationTargetException {

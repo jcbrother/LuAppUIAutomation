@@ -1,7 +1,9 @@
 package com.lufax.ui.auto.aop;
 
 import com.lufax.ui.auto.assertions.AssertUtils;
+import com.lufax.ui.auto.caseobj.AssertKey;
 import com.lufax.ui.auto.caseobj.Step;
+import com.lufax.ui.auto.components.LocatorUtils;
 import com.lufax.ui.auto.services.ReportingService;
 import com.lufax.ui.auto.services.SnapshootService;
 import org.aspectj.lang.JoinPoint;
@@ -9,6 +11,9 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.Iterator;
+import java.util.LinkedList;
 
 /**
  * Created by Jc on 16/10/15.
@@ -41,16 +46,23 @@ public class ExecutorListener {
 
     @Around("executeStep()")
     public Step stepExecutionListener(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
-        Object result = proceedingJoinPoint.proceed();
-        System.out.println("step");
-        return (Step) result;
+        Step result = (Step) proceedingJoinPoint.proceed();
+        LinkedList<AssertKey> assertKeys = result.getAssertKeys();
+        boolean assertResult;
+        for(AssertKey assertKey : assertKeys){
+            assertResult = assertUtils.assertKey(assertKey);
+            if(assertResult == false){
+                result.setStepResultPass(false);
+            }
+        }
+        return result;
     }
+
 
     @Around("executeCase()")
     public boolean caseExecutionListener(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
-        System.out.println("case");
-        Object result = proceedingJoinPoint.proceed();
-        return (Boolean) result;
+        Boolean result = (Boolean) proceedingJoinPoint.proceed();
+        return result;
     }
 
     @After("executeSuite()")
